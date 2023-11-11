@@ -12,7 +12,6 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import PreviewIcon from '@mui/icons-material/Preview';
 import img_repo_git from "../../assets/imgs/img_repo_git.jpg";
 
-
 import homer_simpson from "../../assets/imgs/homer_simpson.gif";
 
 
@@ -21,7 +20,7 @@ export const ProjectsComponent = () => {
     const [useResultGithub, setResultGithub] = useState({
         isLoading: true,
         data: [],
-        error: false
+        errorMSG: ""
     });
 
     const matches = useMediaQuery('(min-width:992px)');
@@ -35,22 +34,37 @@ export const ProjectsComponent = () => {
 
     useEffect(() => {
         const getCredential = async () => {
-            const github_credential_result = await github_credential.rest.users.getAuthenticated();
 
-            axios.get(`${github_credential_result?.data.url}/repos`)
-                .then(function (response) {
-                    setResultGithub({
-                        ...useResultGithub,
-                        isLoading: false,
-                        data: response.data,
+            try {
+                const github_credential_result = await github_credential.rest.users.getAuthenticated();
+
+                axios.get(`${github_credential_result?.data.url}/repos`)
+                    .then(function (response) {
+                        setResultGithub({
+                            errorMSG: "",
+                            isLoading: false,
+                            data: response.data,
+                        });
+                    })
+                    .catch(function (error) {
+                        setResultGithub({
+                            errorMSG: "ERROR. Usuario de GIT NO puede responder",
+                            isLoading: false,
+                            data: [],
+                        });
                     });
-                })
-                .catch(function (error) {
-                    alert(error);
+
+            } catch (error) {
+                setResultGithub({
+                    errorMSG: "ERROR. Usuario de GIT NO autorizado",
+                    isLoading: false,
+                    data: [],
                 });
+            }
         }
         getCredential();
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [useResultGithub.isLoading]);
 
     return <div id="section_projects" className="SECTIONS_CONTAINER">
@@ -68,47 +82,51 @@ export const ProjectsComponent = () => {
 
             <InView >
                 <div className='card_container'>
-                    <Swiper
-                        slidesPerView={matches ? 4 : 1}
-                        centeredSlides={false}
-                        spaceBetween={20}
-                        pagination={{
-                            type: "fraction",
-                        }}
-                        navigation={true}
-                        modules={[Navigation]}
-                        className="mySwiper"  >
 
-                        {
-                            useResultGithub.isLoading ? "CARGANDO" : useResultGithub.data.map((e, i) => <SwiperSlide key={i}>
-                                <Card className="h-100 card_item_swiper_card">
-                                    <div className="card_item_swiper_title">
-                                        {e.name}
-                                    </div>
+                    {
+                        useResultGithub.isLoading ? <div style={{ textAlign: "center", marginTop: "5%", marginBottom: "5%" }}>
+                            <span className="SPINNER_loading1"></span>
+                        </div> : useResultGithub.errorMSG ? <div className="ERROR_MSG_CONTAINER">
 
-                                    <Card.Body className="card_item_body_swiper_card">
-                                        <div>
-                                            <Image src={img_repo_git} />
+                            {useResultGithub.errorMSG}
+
+                        </div> : <Swiper
+                            slidesPerView={matches ? 4 : 1}
+                            centeredSlides={false}
+                            spaceBetween={20}
+                            pagination={{
+                                type: "fraction",
+                            }}
+                            navigation={true}
+                            modules={[Navigation]}
+                            className="mySwiper">
+
+                            {
+                                useResultGithub.data.map((e, i) => e.homepage ? <SwiperSlide key={i}>
+                                    <Card className="h-100 card_item_swiper_card">
+                                        <div className="card_item_swiper_title">
+                                            {e.name}
                                         </div>
+                                        <Card.Body className="card_item_body_swiper_card">
+                                            <div>
+                                                <Image src={img_repo_git} />
+                                            </div>
 
-                                        {
-                                            e.homepage ? <div className="card_item_body_swiper_card_btn_read">
+                                            <div className="card_item_body_swiper_card_btn_read">
                                                 <Tooltip title="Ver demostración" placement="top-start">
-                                                    <a href={e.homepage} target='_blank'>
+                                                    <a href={e.homepage} target='_blank' rel="noreferrer">
                                                         <Button size="sm" onMouseDown={(e) => e.preventDefault()}>
                                                             <PreviewIcon />
                                                         </Button>
                                                     </a>
-
                                                 </Tooltip>
-                                            </div> : null
-                                        }
-
-                                    </Card.Body>
-                                </Card>
-                            </SwiperSlide>)
-                        }
-                    </Swiper>
+                                            </div>
+                                        </Card.Body>
+                                    </Card>
+                                </SwiperSlide> : null)
+                            }
+                        </Swiper>
+                    }
 
                     <div className="GITHUB_REPO_CONTAINER">
 
@@ -116,36 +134,49 @@ export const ProjectsComponent = () => {
 
                         <div className='repository_list_content'>
                             {
-                                useResultGithub.isLoading ? "CARGANDO" : useResultGithub.data.map((e, i) => <a href={e.html_url} target='_blank' key={i}>
-                                    <div className='repo_item'>
-                                        <p className='name_repo'>
-                                            {"#"}{e.full_name}
-                                        </p>
-                                        <p className='description_repo'>
-                                            {"/*"}{e.description}{"*/"}
-                                        </p>
+                                useResultGithub.isLoading ? <div style={{ textAlign: "center", marginTop: "5%", marginBottom: "5%" }}>
+                                    <span className="SPINNER_loading1"></span>
+                                </div> : useResultGithub.errorMSG ? <div className="ERROR_MSG_CONTAINER">
 
-                                        {
-                                            e.topics.length > 0 ? <div className="repository_list_content_btn_topics">
+                                    {useResultGithub.errorMSG}
+
+                                </div> : <>
+
+                                    {
+                                        useResultGithub.data.map((e, i) => <a href={e.html_url} target='_blank' rel="noreferrer" key={i}>
+                                            <div className='repo_item'>
+                                                <p className='name_repo'>
+                                                    {"#"}{e.full_name}
+                                                </p>
+                                                <p className='description_repo'>
+                                                    {"/*"}{e.description}{"*/"}
+                                                </p>
+
                                                 {
-                                                    e.topics.map((e) =>
-                                                        <button type="button" class=" btn-sm">
-                                                            {e}
-                                                        </button>
-                                                    )
+                                                    e.topics.length > 0 ? <div className="repository_list_content_btn_topics">
+                                                        {
+                                                            e.topics.map((e) =>
+                                                                <button type="button" class=" btn-sm">
+                                                                    {e}
+                                                                </button>
+                                                            )
+                                                        }
+                                                    </div> :
+                                                        null
                                                 }
-                                            </div> :
-                                                null
-                                        }
-                                    </div>
-                                </a>)
+                                            </div>
+                                        </a>)
+                                    }
+
+                                </>
+
                             }
                         </div>
                     </div>
                 </div>
             </InView>
 
-            <div style={{ marginTop: "5%",marginBottom: "-5%", textAlign:"center" }}>
+            <div style={{ marginTop: "5%", marginBottom: "-5%", textAlign: "center" }}>
                 <Image src={homer_simpson} />
                 <div style={{ color: "#e5e5e5" }}>Gracias por visitar mi portfolio 🙂</div>
             </div>
