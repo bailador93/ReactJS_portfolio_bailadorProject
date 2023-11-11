@@ -1,0 +1,26 @@
+@font-face {
+    font-family: title_welcome;
+    src: url('../fonts/Professionista.ttf');
+}
+
+@font-face {
+    font-family: subtitle_welcome;
+    src: url('../fonts/Changa-Regular.ttf');
+}
+
+
+@font-face {
+    font-family: title_section;
+    src: url('../fonts/ChakraPetch-Bold.ttf');
+}
+
+
+@font-face {
+    font-family:text_app;
+    src: url('../fonts/Quicksand-Light.ttf');
+}
+
+@font-face {
+    font-family:text_btn1;
+    src: url('../fonts/AlegreyaSansSC-Medium.ttf');
+}
