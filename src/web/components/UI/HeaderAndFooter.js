@@ -16,8 +16,6 @@ export const HeaderApp = () => {
                         <Image width={100} src={bailadorLogoAPP} alt="bailador-project-logo" />
                     </Link>
                 </Navbar.Brand>
-
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
             </Container>
         </Navbar>
     </>;
