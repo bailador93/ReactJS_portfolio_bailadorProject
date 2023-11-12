@@ -9,7 +9,7 @@ export const AppWeb = () => {
     return <>
         <Helmet>
             <title>
-                Bienvenido a mi portfolio
+                Welcome to my portfolio
             </title>
         </Helmet>
 
