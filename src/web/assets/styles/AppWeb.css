@@ -411,7 +411,7 @@ img {
     text-align: left;
     overflow-x: hidden;
     overflow-y: auto;
-    height: 200px;
+    height: 500px;
 }
 
 .GITHUB_REPO_CONTAINER .repository_list_content::-webkit-scrollbar {
