@@ -14,15 +14,14 @@ export const HomeComponent = (props) => {
     const { setHomeSectionIsActive } = props;
 
     return <>
-
         <div id="section_home" className="HOME_MAIN_CONTAINER">
 
             <InView onChange={setHomeSectionIsActive}>
 
                 <div className="HOME_MAIN_CONTENT">
                     <div className="title_content">
-                        <h1> Hola, soy Desarrollador de Software </h1>
-                        <h5> Bienvenido a mi portfolio </h5>
+                        <h1> Hello, I am a Software Developer </h1>
+                        <h5> Welcome to my portfolio </h5>
 
                         <div className={`${!useApplyBounceTop ? "bounce-top" : "fadeIn"}`}>
                             <KeyboardDoubleArrowDownIcon style={{ pointerEvents: "visible" }}

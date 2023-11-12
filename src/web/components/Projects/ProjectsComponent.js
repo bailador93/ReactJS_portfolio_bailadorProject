@@ -48,7 +48,7 @@ export const ProjectsComponent = () => {
                     })
                     .catch(function (error) {
                         setResultGithub({
-                            errorMSG: "ERROR. Usuario de GIT NO puede responder",
+                            errorMSG: "ERROR. GIT user CANNOT reply",
                             isLoading: false,
                             data: [],
                         });
@@ -56,7 +56,7 @@ export const ProjectsComponent = () => {
 
             } catch (error) {
                 setResultGithub({
-                    errorMSG: "ERROR. Usuario de GIT NO autorizado",
+                    errorMSG: "ERROR. GIT user NOT authorized",
                     isLoading: false,
                     data: [],
                 });
@@ -73,7 +73,7 @@ export const ProjectsComponent = () => {
 
             <h3>
                 <span style={{ textShadow: "0px 0px 10px rgb(0 102 255)" }}>
-                    Proyectos
+                    Projects
                 </span>
                 <span className="fadeIn_infinite " style={{ color: "#F24F09", textShadow: "0px 0px 10px #F24F09" }}>
                     {"> "}
@@ -178,7 +178,7 @@ export const ProjectsComponent = () => {
 
             <div style={{ marginTop: "5%", marginBottom: "-5%", textAlign: "center" }}>
                 <Image src={homer_simpson} />
-                <div style={{ color: "#e5e5e5" }}>Gracias por visitar mi portfolio 🙂</div>
+                <div style={{ color: "#e5e5e5" }}>Thank you for visiting my portfolio 🙂</div>
             </div>
 
         </div>

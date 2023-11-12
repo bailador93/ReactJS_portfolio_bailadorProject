@@ -38,7 +38,7 @@ export const FooterApp = () => {
         </div>
         <div className='FOOTER_app_content_copy_right'>
             <p>
-                &copy; Desarrollado por Gastón E. Bailador - Bailador Project. Todos los derechos reservados.
+                &copy; Developed by Gastón E. Bailador - Bailador Project. All rights reserved.
             </p>
         </div>
     </div >;
