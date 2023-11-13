@@ -27,7 +27,7 @@ export const FooterApp = () => {
 
         <div className="FOOTER_app_links_container">
             {
-                DATA_SOCIAL.map((e, i) => <Tooltip key={i} title={`Conectarse a mi perfil de ${e.title}`} placement="top-start">
+                DATA_SOCIAL.map((e, i) => <Tooltip key={i} title={`Connect to my profile ${e.title}`} placement="top-start">
                     <a href={e.url} target="_blank" rel="noreferrer">
                         <div>
                             <Image src={e.icon} />
